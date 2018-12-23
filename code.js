@@ -5,7 +5,7 @@ app.service("ProcessService", function ($http, $q)
 {
 	var url="https://raw.githubusercontent.com/ScriptSK/ps4reaper.github.io/master/processlist.json";
 	var deferred = $q.defer();
-	$http.get("http://192.168.1.17:771/list").then(function (data)
+	$http.get(url).then(function (data)
 	{
 		deferred.resolve(data);
 	});
