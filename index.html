@@ -5,22 +5,19 @@
 
 <div ng-app="myApp" ng-controller="customersCtrl"> 
 
-<ul>
-  <li ng-repeat="x in myData">
-    {{ x.Name + ', ' + x.Country }}
-  </li>
-</ul>
+
 <select>
-<option ng-repeat="x in myData">{{x.Name}}</option>
+<option ng-repeat="x in myData" value={{x.pid}}>{{x.name}}</option>
 </select>
 
 </div>
 
 <script>
 var app = angular.module('myApp', []);
+
 app.controller('customersCtrl', function($scope, $http) {
-  $http.get("https://www.w3schools.com/angular/customers.php").then(function (response) {
-      $scope.myData = response.data.records;
+  $http.get("file:///C:/Users/shini/Desktop/test.js").then(function (response) {
+      $scope.myData = response.data;
   });
 });
 </script>
