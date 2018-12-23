@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<body>
+<script src="file:///C:/Users/shini/Desktop/appAJ/Code.js"></script>
+<body ng-app="myApp">
 
-<div ng-app="myApp" ng-controller="customersCtrl"> 
+<div  ng-controller="ProcessCtrl"> 
 
 
 <select>
-<option ng-repeat="x in myData" value={{x.pid}}>{{x.name}}</option>
+<option ng-repeat="x in process" value={{x.pid}}>{{x.name}}</option>
 </select>
 
 </div>
 
-<script>
-var app = angular.module('myApp', []);
 
-app.controller('customersCtrl', function($scope, $http) {
-  $http.get("https://raw.githubusercontent.com/ScriptSK/ps4reaper.github.io/master/processlist.json").then(function (response) {
-      $scope.myData = response.data;
-  });
-});
-</script>
+
 
 </body>
 </html>
