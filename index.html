@@ -1,20 +1,284 @@
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/ScriptSK/ps4reaper.github.io/code.js"></script>
-<body ng-app="myApp">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
 
-<div  ng-controller="ProcessCtrl"> 
+var hD='0123456789ABCDEF';
+    function dec2hex(d) {
+        var h = hD.substr(d&15,1);
+        while (d>15) {
+            d>>=4;
+            h=hD.substr(d&15,1)+h;
+        }
+        //if (document.frmConvert.chbLowercaseOutput.checked) {
+         //   h = h.toLowerCase();
+        //}
+        return h;
+    }
 
+	function clean_hex(input) {
+        input = input.toUpperCase();
+        input = input.replace(/-| |0x/gi, ""); 
+        
+        var orig_input = input;
+        input = input.replace(/[^A-Fa-f0-9]/g, "");
+        if (orig_input != input)
+            input="";
+        return input;    
+    }
 
-<select>
-<option ng-repeat="x in process" value={{x.pid}}>{{x.name}}</option>
-</select>
+	function Hex2ArrayByte(hex) {
+      var cleaned_hex = clean_hex(hex);
+      var binary = new Array();
+	  
+      if (cleaned_hex.length % 2) {
+        alert ("Error: cleaned hex string length is odd.");
+        document.frmConvert.base64.value = "";        
+        return null;
+      }
+	  
+      
+      for (var i=0; i<cleaned_hex.length/2; i++) {
+        var h = cleaned_hex.substr(i*2, 2);
+        binary[i] = parseInt(h,16);        
+      }
+	  
+      return binary;
+    } 
+
+	function binary_to_base64(input) {
+	  var base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+      var ret = new Array();
+      var i = 0;
+      var j = 0;
+      var char_array_3 = new Array(3);
+      var char_array_4 = new Array(4);
+      var in_len = input.length;
+      var pos = 0;
+  
+      while (in_len--)
+      {
+          char_array_3[i++] = input[pos++];
+          if (i == 3)
+          {
+              char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
+              char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
+              char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
+              char_array_4[3] = char_array_3[2] & 0x3f;
+  
+              for (i = 0; (i <4) ; i++)
+                  ret += base64_chars.charAt(char_array_4[i]);
+              i = 0;
+          }
+      }
+  
+      if (i)
+      {
+          for (j = i; j < 3; j++)
+              char_array_3[j] = 0;
+  
+          char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
+          char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
+          char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
+          char_array_4[3] = char_array_3[2] & 0x3f;
+  
+          for (j = 0; (j < i + 1); j++)
+              ret += base64_chars.charAt(char_array_4[j]);
+  
+          while ((i++ < 3))
+              ret += '=';
+  
+      }
+  
+      return ret;
+    }
+
+    function Base64ToHex(input) {
+		var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+        var output = new Array();
+        var chr1, chr2, chr3;
+        var enc1, enc2, enc3, enc4;
+        var i = 0;
+
+        var orig_input = input;
+        input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+        if (orig_input != input)
+            alert ("Warning! Characters outside Base64 range in input string ignored.");
+        if (input.length % 4) {
+            alert ("Error: Input length is not a multiple of 4 bytes.");
+            return "";
+        }
+        
+        var j=0;
+        while (i < input.length) {
+
+            enc1 = keyStr.indexOf(input.charAt(i++));
+            enc2 = keyStr.indexOf(input.charAt(i++));
+            enc3 = keyStr.indexOf(input.charAt(i++));
+            enc4 = keyStr.indexOf(input.charAt(i++));
+
+            chr1 = (enc1 << 2) | (enc2 >> 4);
+            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+            chr3 = ((enc3 & 3) << 6) | enc4;
+            
+            output[j++] = chr1;
+            if (enc3 != 64)
+              output[j++] = chr2;
+            if (enc4 != 64)
+              output[j++] = chr3;
+              
+        }
+        return output;
+    }
+    
+    function ArraybyteToString(intput,length) {
+        var separator = "";
+        //if (document.frmConvert.chbSeparator.checked)
+         //   separator = " 0x";
+        var hexText = "";
+		if (length>intput.length)
+			length=intput.length;
+        for (i=0; i<length; i++) {
+          hexText = hexText + separator + (intput[i]<16?"0":"") + dec2hex(intput[i]);
+        }
+        return hexText;
+    }
+	
+	function GetProcessList() {
+        
+        return 0;
+    }
+
+$(document).ready(function(){
+
+		//get process list
+		$("#RWPanel").hide();
+		var url="";
+
+  $("#getproc").click(function(){
+	
+	url="http://"+$("#PS4IP").val()+":771";
+	console.log(url);
+	
+	$('#comboProc').val('');
+    $.getJSON(url+"/list", function(result){
+	
+		console.log(result);
+		$.each(result, function(i, field){
+			var option = $('<option />');
+			option.attr('value', field.pid).text(field.name);
+			$("#comboProc").append(option);
+			
+			
+		});
+
+		$("#comboProc").change(function() {
+	  
+			 
+			var pid =$( "select option:selected" ).attr('value');
+			var proc=$( "select option:selected" ).text();
+			alert("pid : "+pid+" process : "+proc);			
+			$.getJSON(url+"/info?pid="+pid, function(result){
+			
+				console.log("process info");
+				console.log(result);
+				$("#Processid").attr('value', pid).text("pid : "+pid);
+				$("#ProcessName").text("Name : "+result.name);
+				$("#ProcessPath").text("path : "+result.path);
+				$("#ProcesstitleID").text("titleid : "+result.titleid);
+				$("#Processcomment").text("contentid : "+result.contentid);
+				$("#cover").attr('src',"https://store.playstation.com/store/api/chihiro/00_09_000/titlecontainer/FR/fr/999/"+result.titleid+"_00/image?w=128")
+				
+			});
+			$("#RWPanel").show(1000);
+			
+			
+		});
+		
+    });
+	
+  });  
+  
+  
+  $("#Read").click(function(){
+  
+		var pid =$("#Processid").attr('value');
+		var address=$("#Raddress").val();
+		var length=$("#Rlentgh").val();
+		
+		var rd=url+"/read?pid="+pid+"&address="+address+"&length="+length;
+		
+		$.get(rd).always(function( data ) {
+		var base64="";
+		var hex="";
+			base64=data.responseText;
+			var bytearray=Base64ToHex(base64);
+			hex=ArraybyteToString(bytearray,bytearray.length);
+			$("#ReadResultbase64").text(base64);
+			$("#ReadResulthex").text(hex);
+			console.log("base "+base64);
+			console.log("hex "+hex);		
+		});
+  });
+
+  $("#write").click(function(){
+  
+	var pid =$("#Processid").attr('value');
+	var address=$("#Waddress").val();
+	var length=$("#Wlentgh").val();
+	var hex=$("#WData").val();
+	var bytearray = Hex2ArrayByte(hex);
+	var data=binary_to_base64(bytearray);
+	
+	console.log("hex "+hex);
+	
+	var wr=url+"/write?pid=" + pid + "&address=" + address + "&data=" + data + "&length=" + length;
+	$.get(wr, function( status){
+		console.log("Write Stat: " + status);
+		alert("Status: " + status);
+		
+	}); 
+		
+  
+  });  
+  
+  
+});
+</script>
+</head>
+<body>
+
+<p>PS4 IP: <input type="text" id="PS4IP" value="192.168.1.17"></p>
+<button id="getproc">Get Process</button>
+<select id="comboProc"></select>
+
+<div id="RWPanel">
+<div>--------</div>
+<img id="cover" src="https://store.34station.com/store/api/chihiro/00_09_000/titlecontainer/FR/fr/999/cusa07123_00/image?w=128" style="width:auto;">
+	<div>--------</div>
+	Process info
+	<p id="Processid">*</p>
+	<p id="ProcessName">*</p>
+	<p id="ProcessPath">*</p>
+	<p id="ProcesstitleID">*</p>
+	<p id="Processcomment">*</p>
+	<div>--------</div>
+	Read Panel
+	<p>address : <input type="text" id="Raddress" value="0x400000"></p>
+	<p>lentgh : <input type="text" id="Rlentgh" value="4"></p>
+	<button id="Read">Read</button>
+	<p id="ReadResultbase64"></p>
+	<p id="ReadResulthex">x</p>
+
+	<div>--------</div>
+
+	Write Panel
+	<p>address : <input type="text" id="Waddress" value=""></p>
+	<p>lentgh : <input type="text" id="Wlentgh" value=""></p>
+	<p>Data : <input type="text" id="WData" value=""></p>
+	<button id="write">write</button>
 
 </div>
-
-
-
-
 </body>
 </html>
