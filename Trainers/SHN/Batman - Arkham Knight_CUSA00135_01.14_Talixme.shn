@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Trainer xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Game="Batman : Arkham Knight" Moder="Talixme" Cusa="CUSA00135" Version="01.14" Process="eboot.bin">
+  <Cheat Control="Toggel" Text="Godmode">
+    <Cheatline>
+      <Offset>7507DF</Offset>
+      <Section>0</Section>
+      <ValueOn>E9-1D-F4-FF-01-90-90</ValueOn>
+      <ValueOff>41-89-07-48-8B-4D-C0</ValueOff>
+    </Cheatline>
+    <Cheatline>
+      <Offset>274FC01</Offset>
+      <Section>0</Section>
+      <ValueOn>66-41-81-7F-64-2B-02-0F-85-09-00-00-00-48-8B-4D-C0-E9-CF-0B-00-FE-41-89-07-90-48-8B-4D-C0-E9-C2-0B-00-FE</ValueOn>
+      <ValueOff>66-41-81-7F-64-2B-02-0F-85-09-00-00-00-48-8B-4D-C0-E9-CF-0B-00-FE-41-89-07-90-48-8B-4D-C0-E9-C2-0B-00-FE</ValueOff>
+    </Cheatline>
+  </Cheat>
+  <Cheat Control="Toggel" Text="1 Hit Kill">
+    <Cheatline>
+      <Offset>7507DF</Offset>
+      <Section>0</Section>
+      <ValueOn>E9-1D-F4-FF-01-90-90</ValueOn>
+      <ValueOff>E9-1D-F4-FF-01-90-90</ValueOff>
+    </Cheatline>
+    <Cheatline>
+      <Offset>274FC01</Offset>
+      <Section>0</Section>
+      <ValueOn>66-41-81-7F-64-2B-02-0F-85-09-00-00-00-48-8B-4D-C0-E9-CF-0B-00-FE-41-C6-07-00-48-8B-4D-C0-E9-C2-0B-00-FE</ValueOn>
+      <ValueOff>66-41-81-7F-64-2B-02-0F-85-09-00-00-00-48-8B-4D-C0-E9-CF-0B-00-FE-41-89-07-90-48-8B-4D-C0-E9-C2-0B-00-FE</ValueOff>
+    </Cheatline>
+  </Cheat>
+  <Cheat Control="Toggel" Text="Infinite Skills Points">
+    <Cheatline>
+      <Offset>7507DF</Offset>
+      <Section>0</Section>
+      <ValueOn>E9-1D-F4-FF-01-90-90</ValueOn>
+      <ValueOff>E9-1D-F4-FF-01-90-90</ValueOff>
+    </Cheatline>
+    <Cheatline>
+      <Offset>274FC01</Offset>
+      <Section>0</Section>
+      <ValueOn>66-41-81-7F-64-2B-02-0F-85-09-00-00-00-48-8B-4D-C0-E9-CF-0B-00-FE-66-41-81-7F-64-02-00-0F-85-0D-00-00-00-48-8B-4D-C0-41-C6-07-FF-E9-B5-0B-00-FE-41-89-07-48-8B-4D-C0-E9-A9-0B-00-FE</ValueOn>
+      <ValueOff>66-41-81-7F-64-2B-02-0F-85-09-00-00-00-48-8B-4D-C0-E9-CF-0B-00-FE-41-89-07-90-48-8B-4D-C0-E9-C2-0B-00-FE-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00</ValueOff>
+    </Cheatline>
+  </Cheat>
+</Trainer>
