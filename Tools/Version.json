@@ -1,5 +1,6 @@
-[{
-"Android": "1.0",
-"Windows": "1.0",
-"Reaper": "1.0"
-}]
+{
+"DroidTrainer": "0.0",
+"MultiTrainer": "1.1.0.0",
+"ReaperStudio": "1.1.0.0",
+"iOSTrainer": "0.0"
+}
