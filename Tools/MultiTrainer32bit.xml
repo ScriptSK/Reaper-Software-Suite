@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <item>
-    <version>1.1.0.1</version>
+    <version>1.1.2.0</version>
     <url>https://github.com/ScriptSK/Reaper-Software-Suite/releases/download/V1.1.20/MultiTrainer.x32.zip</url>
     <changelog>https://github.com/ScriptSK/Reaper-Software-Suite/releases/tag/V1.1.20</changelog>
     <mandatory>true</mandatory>
