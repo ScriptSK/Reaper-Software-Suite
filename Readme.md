@@ -1,4 +1,4 @@
-This repo contains resources related to MultiTrainer2 and Reaper Studio for the PlayStation.
+This repo contains resources related to MultiTrainer2 and Reaper Studio for the PlayStation 4 & 5.
 
 All new releases are available only on ShininGami Ko-fi:
 https://ko-fi.com/shiningami
