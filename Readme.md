@@ -1,5 +1,6 @@
-This repo contain resources needed for Reaper Software Suite 
+This repo contains resources related to MultiTrainer2 and Reaper Studio for the PlayStation.
 
-PS: some of the app is still on WIP or on private alpha test phase so stay tuned
+All new releases are available only on ShininGami Ko-Fi
+https://ko-fi.com/shiningami
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E54936K)
+![olaJpk3](https://github.com/ScriptSK/Reaper-Software-Suite/assets/5753365/7ea4c36e-bc77-47a8-8db3-35063f7de625)
